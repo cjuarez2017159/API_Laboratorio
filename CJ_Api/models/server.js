@@ -8,7 +8,8 @@ class Server{
         this.app = express();
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios'
-
+        this.animalPath = '/api/animals'
+        this.loginPath = '/api/auth'
         this.conectarDB();
         this.middlewares();
         this.routes();
@@ -25,7 +26,9 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.usuarioPath, require('../routes/user.routes'))
+        this.app.use(this.usuarioPath, require('../routes/user.routes'));
+        this.app.use(this.animalPath, require('../routes/animal.routes'));
+        this.app.use(this.loginPath, require('../routes/auth.routes'));
     }
     listen(){
         this.app.listen(this.port, () =>{
