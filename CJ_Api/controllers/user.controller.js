@@ -1,6 +1,6 @@
 const bcryptsjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
-const { response } = require('express');
+const { response, request } = require('express');
 
 const usuariosGet = async (req, res = response) => {
     const { limite, desde } = req.query;
@@ -48,10 +48,12 @@ const putUsuarios = async (req, res = response) => {
 const usuariosDelete = async (req, res) => {
     const {id} = req.params;
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});
+    const usuarioAutenticado = req.usuario;
 
     res.status(200).json({
-        msg: 'Usuario Eliminado Exitosamente!!!',
-        usuario
+        msg: 'Usuario a eliminar',
+        usuario,
+        usuarioAutenticado
     });
 }
 
